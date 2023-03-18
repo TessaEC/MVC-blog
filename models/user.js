@@ -1,8 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
-const comment = require('./comment');
-const blogpost = require('./blogpost');
 
 class User extends Model {
   checkPassword(loginPw) {
@@ -44,9 +42,6 @@ User.init(
     modelName: 'user',
   }
 );
-
-User.hasMany(Comment, { foreignKey: 'user_id' });
-User.hasMany(BlogPost, { foreignKey: 'user_id' });
 
 
 module.exports = User;
