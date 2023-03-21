@@ -4,7 +4,13 @@ const sequelize = require('../config/connection');
 class Comment extends Model {}
 
 Comment.init({
-  content: {
+  id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  comment_content: {
     type: DataTypes.TEXT,
     allowNull: false
   },
@@ -26,7 +32,7 @@ Comment.init({
   }
 }, {
   sequelize,
-  modelName: 'comment'
+  modelName: 'Comment'
 });
 
 module.exports = Comment;

@@ -22,7 +22,7 @@ BlogPost.init({
   user_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'user',
+      model: 'User',
       key: 'id'
     }
   }
@@ -31,7 +31,7 @@ BlogPost.init({
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'blogpost',
+    modelName: 'BlogPost',
 });
 
 

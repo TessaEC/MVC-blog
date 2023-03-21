@@ -1,89 +1,77 @@
-// const sequelize = require('../config/connection');
-
-// const seedUsers = require('./User-seeds');
-// const seedPosts = require('./BlogPost-seeds');
-// const seedComments = require('./Comment-seeds');
-
-// const seedAll = async () => {
-//   await sequelize.sync({ force: true });
-//   console.log('\n----- DATABASE SYNCED -----\n');
-//   await seedUsers();
-//   console.log('\n----- USER SEEDED -----\n');
-
-//   await seedPosts();
-//   console.log('\n----- POST SEEDED -----\n');
-
-//   await seedComments();
-//   console.log('\n----- COMMENT SEEDED -----\n');
-
-//   process.exit(0);
-// };
-
-// seedAll();
-
 const sequelize = require('../config/connection');
 const { User, BlogPost, Comment } = require('../models');
-const bcrypt = require('bcrypt');
 
-const userData = require('./userData.json');
-const blogPostData = require('./blogPostData.json');
-const commentData = require('./commentData.json');
+// Create users
+const users = [
+  {
+    username: 'john_doe',
+    password: 'password123'
+  },
+  {
+    username: 'jane_doe',
+    password: 'password456'
+  },
+  {
+    username: 'jim_smith',
+    password: 'password789'
+  }
+];
 
-const seedDatabase = async () => {
-  await sequelize.sync({ force: true });
+sequelize.sync({ force: true })
+  .then(() => User.bulkCreate(users))
+  .then(() => {
+    // Get users to create blog posts for
+    return User.findAll();
+  })
+  .then((users) => {
+    // Create blog posts for each user
+    const posts = [];
 
-  const users = await Promise.all(userData.map(async (user) => {
-    const hashedPassword = await bcrypt.hash(user.password, 10);
-    return {
-      ...user,
-      password: hashedPassword,
-    }
-    }));
+    users.forEach((user) => {
+      const post1 = {
+        title: 'My First Blog Post',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        user_id: user.id
+      };
 
-    await User.bulkCreate(users, {
-      individualHooks: true,
-      returning: true,
+      const post2 = {
+        title: 'My Second Blog Post',
+        content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        user_id: user.id
+      };
+
+      posts.push(post1, post2);
     });
 
-    for (const blogPost of blogPostData) {
-      await BlogPost.create({
-        ...blogPost,
-        user_id: users[Math.floor(Math.random() * users.length)].id,
+    return BlogPost.bulkCreate(posts);
+  })
+  .then(() => {
+    // Get users and blog posts to create comments for
+    return Promise.all([
+      User.findAll(),
+      Post.findAll()
+    ]);
+  })
+  .then(([users, posts]) => {
+    // Create comments for each blog post and user
+    const comments = [];
+
+    posts.forEach((post) => {
+      const user = users[Math.floor(Math.random() * users.length)];
+      const content = `Comment on ${post.title}`;
+
+      comments.push({
+        content: content,
+        user_id: user.id,
+        post_id: post.id
       });
-    }
+    });
 
-    for (const comment of commentData) {
-      await Comment.create({
-        ...comment,
-        user_id: users[Math.floor(Math.random() * users.length)].id,
-      });
-    }
-
-    process.exit(0);
-  };
-
-  seedDatabase();
-  
-//   User.bulkCreate(userData, {
-//     individualHooks: true,
-//     returning: true,
-//   });
-
-//   for (const blogPost of blogPostData) {
-//     await BlogPost.create({
-//       ...blogPost,
-//       user_id: users[Math.floor(Math.random() * users.length)].id,
-//     });
-//   }
-
-//   for (const comment of commentData) {
-//     await Comment.create({
-//       ...comment,
-//       user_id: users[Math.floor(Math.random() * users.length)].id,
-//     });
-//   }
-
-//   process.exit(0);
-// };
-
-// seedDatabase();
+    return Comment.bulkCreate(comments);
+  })
+  .then(() => {
+    console.log('Data created successfully.');
+  })
+  .catch((error) => {
+    console.log('Error creating data:', error);
+  });
