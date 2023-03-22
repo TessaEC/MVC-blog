@@ -5,6 +5,14 @@
   </head>
   <header>
     <h1>Blog Posts</h1>
+    <p>{{formatDate created_at}}</p>
+      {{#if logged_in}}
+        <nav href="../logout.handlebars"><button>Logout</button></nav>
+      {{else}}
+        <nav href="../login.handlebars">Login</nav>
+        <nav href="../signup.handlebars">Signup</nav>
+      {{/if}}
+      <nav href="../dashboard.handlebars">Dashboard</nav>
   </header>
   <body>
     <main>

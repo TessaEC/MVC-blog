@@ -2,38 +2,42 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
-class BlogPost extends Model {}
+class BlogPost extends Model { }
 
 BlogPost.init({
   id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
-  user_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: 'User',
-      key: 'id'
-    }
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+title: {
+  type: DataTypes.STRING,
+  allowNull: false
+},
+content: {
+  type: DataTypes.TEXT,
+  allowNull: false
+},
+user_id: {
+  type: DataTypes.INTEGER,
+  allowNull: false,
+  references: {
+    model: 'user',
+    key: 'id'
   }
 },
-{
-    sequelize,
-    freezeTableName: true,
-    underscored: true,
-    modelName: 'BlogPost',
+created_at: {
+  type: DataTypes.DATE,
+  allowNull: false,
+  defaultValue: DataTypes.NOW
+}
+}, {
+sequelize,
+freezeTableName: true,
+underscored: true,
+modelName: 'blog_post'
 });
-
 
 module.exports = BlogPost;
 

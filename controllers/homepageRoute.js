@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const Sequelize = require('../config/connection');
 const { BlogPost, User, Comment } = require('../models');
+const withAuth = require('../utils/auth');
 
-// get all blogs and comments for the homepage
+// get all blogs for the homepage
 router.get('/', (req, res) => {
   console.log('======================');
   BlogPost.findAll({
@@ -10,18 +11,9 @@ router.get('/', (req, res) => {
       'id',
       'content',
       'title',
+      'created_at'
     ],
-    // when user is logged in view comments from the comment table which is tied to the user table
     include: [
-      {
-        model: Comment,
-        attributes: ['id', 'comment_content', 'user_id'],
-        include: {
-          model: User,
-          attributes: ['username']
-        }
-      },
-      // user from the user table
       {
         model: User,
         attributes: ['username']
@@ -34,63 +26,7 @@ router.get('/', (req, res) => {
       console.log(posts);
       res.render('homepage', {
         posts,
-        // logged_in: req.session.logged_in,
-        // username: req.session.username
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
-
-router.get('/login', (req, res) => {
-  if (req.session.logged_in) {
-    res.redirect('/');
-    return;
-  }
-
-  res.render('login');
-});
-
-router.get('/BlogPost/:id', (req, res) => {
-  BlogPost.findOne({
-    where: {
-      id: req.params.id
-    },
-    attributes: [
-      'id',
-      'content',
-      'title',
-      'created_at',
-    ],
-    include: [
-      {
-        model: Comment,
-        attributes: ['id', 'comment_content', 'post_id', 'user_id', 'created_at'],
-        include: {
-          model: User,
-          attributes: ['username']
-        }
-      },
-      {
-        model: User,
-        attributes: ['username']
-      }
-    ]
-  })
-    .then(BlogPostData => {
-      if (!BlogPostData) {
-        res.status(404).json({ message: 'Unable to locate a blog with this ID' });
-        return;
-      }
-      // serialize the data
-      const post = BlogPostData.get({ plain: true })
-
-      // pass data to template
-      res.render('single-post', {
-        post,
-        loggedIn: req.session.logged_in,
+        logged_in: req.session.logged_in,
         username: req.session.username
       });
     })
@@ -98,6 +34,79 @@ router.get('/BlogPost/:id', (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
+});
+// get login page
+router.get('/login', (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect('/dashboard');
+    return;
+  }
+  res.render('login');
+});
+
+// get dashboard page, use withAuth middleware to prevent access to route if not a user/logged in
+router.get('/dashboard', withAuth, async (req ,res) => {
+  try {
+      const userData = await User.findByPk(req.session.user_id, {
+          attributes: { exclude: ['password'] },
+          include: [{ model: BlogPost }]
+          })
+      const user = userData.get({ plain: true })
+      res.render('dashboard', {
+          ...user,
+          logged_in: true
+      })
+  }
+  catch (err) {
+      console.log(err)
+      res.status(500).json(err)
+  }
+})
+// get a single blog post and its comments
+router.get('/:id', (req, res) => {
+  BlogPost.findOne({
+      where: {
+          id: req.params.id
+      },
+      attributes: [
+          'id',
+          'content',
+          'title',
+          'created_at',
+      ],
+      include: [
+          {
+              model: Comment,
+              include: [{
+                  model: User,
+                  attributes: ['username']
+              }
+              ]
+          },
+          {
+              model: User,
+              attributes: ['username']
+          }
+      ]
+  })
+      .then(BlogPostData => {
+          if (!BlogPostData) {
+              res.status(404).json({ message: 'Unable to locate a blog with this ID' });
+              return;
+          }
+          // serialize the data
+          const post = BlogPostData.get({ plain: true })
+
+          // pass data to template
+          res.render('single-post', {
+              post,
+              loggedIn: req.session.logged_in
+          });
+      })
+      .catch(err => {
+          console.log(err);
+          res.status(500).json(err);
+      });
 });
 
 module.exports = router;

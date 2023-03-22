@@ -1,10 +1,7 @@
+const moment = require('moment');
+
 module.exports = {
-    format_date: (date) => {
-      // Format date as MM/DD/YYYY
-      return date.toLocaleDateString();
-    },
-    format_amount: (amount) => {
-      // format large numbers with commas
-      return parseInt(amount).toLocaleString();
-    },
-  };
+  formatDate: (date) => {
+    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+  }
+}
