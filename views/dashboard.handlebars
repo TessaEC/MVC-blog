@@ -1,3 +1,35 @@
-{{!-- {{#if logged_in}}
-<a href="/edit/{{id}}">Edit</a>
-<a href="/delete/{{id}}">Delete</a>
+<form>
+  <div class="form-group">
+    <label for="title">Blog Title</label>
+    <textarea class="form-control" name="title" id="title" rows="1">Enter title here...</textarea>
+  </div>
+  <div class="form-group">
+    <label for="content">Blog Content</label>
+    <textarea class="form-control" name="content" id="content" rows="5">Enter content here...</textarea>
+  </div>
+  {{!-- After add blog button clicked with textarea info, refreshes page with blog added back to single-post view --}}
+  <button type="submit" class="btn btn-primary">Add Blog</button>
+</form>
+
+<div>
+  {{#each posts as |post|}}
+  <div>
+    <h3>{{post.title}}</h3>
+        <span><a href="/{{post.id}}">Edit Blog</span>
+    <p>{{post.content}}</p>
+    <p>Written by {{user.username}} on {{formatDate created_at}}</p>
+  </div>
+  {{#each post.comments as |comment|}}
+  <div>
+    <p>{{comment.content}}</p>
+    <p>{{comment.user.username}} on {{formatDate created_at}}</p>
+  </div>
+  {{/each}}
+</div>
+
+{{/each}}
+</div>
+
+</div>
+
+<script src="../public/js/dashboard.js"></script>

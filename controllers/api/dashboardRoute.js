@@ -82,7 +82,7 @@ router.delete("/:id", withAuth, async (req, res) => {
   }
 })
 // get a single blog post and its comments
-router.get('/BlogPost/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   BlogPost.findOne({
       where: {
           id: req.params.id

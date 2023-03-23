@@ -16,26 +16,26 @@
       <nav class="display-flex justify-space-between align-center">
         <a href="/">Home</a>
         {{#if logged_in}}
-          <button>Logout</button>
+          <button id="logout">Logout</button>
         {{else}}
           <a href="/login">Login</a>
           <a href="/login">Signup</a>
         {{/if}}
+        {{#if logged_in}}
           <a href="/dashboard">Dashboard</a>
+          {{else}}
+          <a href="/login">Dashboard</a>
+        {{/if}}
       </nav>
     </header>
     <main>
       <h2>Blogs</h2>
     {{{body}}}
      </main>
-    <footer>
-      
-    </footer>
   </div>
-
-  <!-- Render script for logged in users only -->
+  {{!-- --}}
   {{#if logged_in}}
-  <script src="/js/logout.js"></script>
+  <script src=".../public/js/logout.js"></script>
   {{/if}}
 </body>
 </html>

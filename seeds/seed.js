@@ -4,17 +4,17 @@ const { User, BlogPost, Comment } = require('../models');
 // Create users
 const users = [
   {
-    username: 'john_doe',
+    username: 'mabel_kay',
     password: 'password123'
+  },
+  {
+    username: 'te_carlson',
+    password: 'password456'
   },
   {
     username: 'jane_doe',
     password: 'password456'
   },
-  {
-    username: 'jim_smith',
-    password: 'password789'
-  }
 ];
 sequelize.sync({ force: true })
   .then(() => User.bulkCreate(users))
@@ -27,12 +27,12 @@ sequelize.sync({ force: true })
     const posts = [];
     users.forEach((user) => {
       const post1 = {
-        title: 'My First Blog Post',
+        title: 'Tech is FUN!',
         content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         user_id: user.id
       };
       const post2 = {
-        title: 'My Second Blog Post',
+        title: 'Bloggidy Blog Blog',
         content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         user_id: user.id
       };
