@@ -1,21 +1,31 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Tech Blog</title>
-  </head>
-  <header>
-    <h1>Blog Posts</h1>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Blog</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="flex-column justify-space-around">
+    <header class="display-flex justify-space-between align-center p-2">
+    <h1>Tech Blog</h1>
     <p>{{formatDate created_at}}</p>
-      {{#if logged_in}}
-        <nav href="../logout.handlebars"><button>Logout</button></nav>
-      {{else}}
-        <nav href="../login.handlebars">Login</nav>
-        <nav href="../signup.handlebars">Signup</nav>
-      {{/if}}
-      <nav href="../dashboard.handlebars">Dashboard</nav>
-  </header>
-  <body>
+      <nav class="display-flex justify-space-between align-center">
+        <a href="/">Home</a>
+        {{#if logged_in}}
+          <button>Logout</button>
+        {{else}}
+          <a href="/login">Login</a>
+          <a href="/login">Signup</a>
+        {{/if}}
+          <a href="/dashboard">Dashboard</a>
+      </nav>
+    </header>
     <main>
+      <h2>Blogs</h2>
     {{{body}}}
     </main>
   </body>

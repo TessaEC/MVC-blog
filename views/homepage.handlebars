@@ -1,22 +1,17 @@
 <div>
-  {{#each posts as |blogPost|}}
+  {{#each posts as |post|}}
   <div>
-    <h3>{{blogPost.title}}</h3>
-    <p>{{blogPost.content}}</p>
+    <h3>{{post.title}}</h3>
+    <p>{{post.content}}</p>
     <p>Written by {{user.username}}</p>
     <p>Created at: {{formatDate created_at}}</p>
   </div>
-  {{#each blogPost.comments as |comment|}}
+  {{#each post.comments as |comment|}}
   <div>
     <p>{{comment.content}}</p>
     <p>Commentator: {{comment.user.username}}</p>
   </div>
   {{/each}}
 </div>
-{{#if logged_in}}
-<a href="/logout">Logout</a>
-{{else}}
-<a href="/login">Login</a>
-{{/if}}
 {{/each}}
 </div>
