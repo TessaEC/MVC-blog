@@ -1,3 +1,4 @@
+// user login
 const loginHandler = async (event) => {
   event.preventDefault();
 
@@ -12,13 +13,14 @@ const loginHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace('/dashboard');
+      document.location.replace('/');
     } else {
       alert(response.statusText);
     }
   }
 };
 
+// user signup
 const signupHandler = async (event) => {
     event.preventDefault();
     
@@ -42,9 +44,9 @@ const signupHandler = async (event) => {
 
 document
     .querySelector('.login-form')
-    .addEventListener('submit', loginHandler);
+    .addEventListener('click', loginHandler);
 
 document
     .querySelector('.signup-form')
-    .addEventListener('submit', signupHandler);
+    .addEventListener('click', signupHandler);
 

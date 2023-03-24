@@ -1,24 +1,52 @@
-header, .project:not(:last-child) {
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .no-button {
+.no-button {
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
-    color: #1b89bc;
+    color: #1B89BC;
     text-decoration: none;
     font-size: 100%;
   }
-  
   .no-button:hover {
-    color: #065b83;
+    color: #065B83;
     text-decoration: underline;
   }
-  
   .dollar-amount {
     color: #056605;
     font-weight: bold;
     margin-left: -5px;
   }
+  a {
+    color: #1BB7BC;
+    text-decoration: none;
+  }
+  #border {
+    border: 1px solid #ccc;
+    background-color: #5F647C;
+  }
+  .divider {
+    border-bottom: 1px solid #ccc;
+  }
+  .color {
+    background-color: #E3BCF3;
+  }
+  .small-text {
+    font-size: 1rem;
+  }
+  .nav-style {
+    color:#000;
+    background-color: #1BB7BC;
+    padding: 5px;
+  }
+  .header-style {
+    color:#000;
+  }
+  .para {
+    border-bottom: #E3BCF3;
+  }
+
+  .container {
+    margin-bottom: 3rem;
+  }
+  /* bootstrap */
+  body{font-size: 1.5rem; background: #2C4766;color: white}input{width: auto} .card{border: none;height: 320px} .input-adj{width: 100%} .forms-inputs{position: relative;color: black}.forms-inputs span{position: absolute;top:-18px;left: 10px;background-color: #fff;padding: 5px 10px;font-size: 15px}.forms-inputs input{height: 50px;border: 2px solid #eee}.forms-inputs input:focus{box-shadow: none;outline: none;border: 2px solid #000}.btn{height: 50px}.success-data{display: flex;flex-direction: column}.bxs-badge-check{font-size: 90px}

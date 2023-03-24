@@ -1,5 +1,6 @@
 <form>
   <div class="form-group">
+    <div class="container mt-5"></div>
     <label for="title">Blog Title</label>
     <textarea class="form-control" name="title" id="title" rows="1">Enter title here...</textarea>
   </div>
@@ -7,29 +8,41 @@
     <label for="content">Blog Content</label>
     <textarea class="form-control" name="content" id="content" rows="5">Enter content here...</textarea>
   </div>
-  {{!-- After add blog button clicked with textarea info, refreshes page with blog added back to single-post view --}}
-  <button type="submit" class="btn btn-primary">Add Blog</button>
+  <button type="submit" class="btn btn-primary" id="new-post">Add Blog</button>
+  <div>
 </form>
+<form>
+    {{#each posts as |post|}}
+    <div>
+      <h3>{{post.title}}</h3>
+      <span class="small-text"><a href=`/{{post.id}}`>Edit Blog</a></span>
+      <p>{{post.content}}</p>
+      <div>
+        <p class="para">{{post.content}}</p>
+        <p class="small-text">Written by {{user.username}} on {{formatDate created_at}}</p>
+      </div>
+    </div>
+    {{#each post.comments as |comment|}}
+    <div>
+      <p>{{comment.content}}</p>
+      <p>{{comment.user.username}} on {{formatDate created_at}}</p>
+    </div>
+    {{/each}}
+  </div>
+  <div>
+    {{#each posts as |post|}}
+    <div class="divider">
+      <h4>{{post.title}}</h4>
+      <span class="small-text"><a href=`{{post.user_id}}`>View Blog</a></span>
+      <div>
+        <p class="para">{{post.content}}</p>
+        <p class="small-text">Written by {{user.username}} on {{formatDate created_at}}</p>
+      </div>
+    </div>
+    {{/each}}
+  </div>
 
-<div>
-  {{#each posts as |post|}}
-  <div>
-    <h3>{{post.title}}</h3>
-        <span><a href="/{{post.id}}">Edit Blog</span>
-    <p>{{post.content}}</p>
-    <p>Written by {{user.username}} on {{formatDate created_at}}</p>
-  </div>
-  {{#each post.comments as |comment|}}
-  <div>
-    <p>{{comment.content}}</p>
-    <p>{{comment.user.username}} on {{formatDate created_at}}</p>
-  </div>
   {{/each}}
-</div>
-
-{{/each}}
-</div>
-
-</div>
-
+  </div>
+</form>
 <script src="./js/dashboard.js"></script>

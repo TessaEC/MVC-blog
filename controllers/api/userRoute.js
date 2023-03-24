@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 
+//login
 router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({ where: {
@@ -27,6 +28,7 @@ router.post('/login', async (req, res) => {
     res.status(400).json(err);
   }
 });
+
 // session logout
 router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
@@ -37,8 +39,9 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+
 // Sign up - creates new user
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const user = await User.create({
       username: req.body.username,
@@ -54,6 +57,5 @@ router.post('/login', async (req, res) => {
     res.status(400).json(err);
   }
 });
-
 
 module.exports = router;

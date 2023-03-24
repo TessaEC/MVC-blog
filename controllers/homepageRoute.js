@@ -82,8 +82,8 @@ router.get('/:id', (req, res) => {
           }
       ]
   })
-      .then(BlogPostData => {
-          if (!BlogPostData) {
+      .then(singleUser => {
+          if (!singleUser) {
               res.status(404).json({ message: 'Unable to locate a blog with this ID' });
               return;
           }
