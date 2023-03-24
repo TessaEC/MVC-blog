@@ -1,4 +1,3 @@
-// Login
 const loginHandler = async (event) => {
   event.preventDefault();
 
@@ -15,7 +14,7 @@ const loginHandler = async (event) => {
     if (response.ok) {
       document.location.replace('/dashboard');
     } else {
-      alert("Error: Incorrect username or password.");
+      alert(response.statusText);
     }
   }
 };
@@ -36,7 +35,7 @@ const signupHandler = async (event) => {
         if (response.ok) {
         document.location.replace('/dashboard');
         } else {
-        alert("Error: Username already exists.");
+        alert(response.statusText);
         }
     }
 };

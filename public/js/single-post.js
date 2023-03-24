@@ -11,7 +11,7 @@ const updatePostHandler = async (event) => {
         if (response.ok) {
             document.location.replace('/dashboard');
         } else {
-            alert('Failed to update post');
+            alert(response.statusText);
         }
     }
 };
@@ -24,7 +24,7 @@ const deletePostHandler = async (event) => {
     if (response.ok) {
         document.location.replace('/dashboard');
     } else {
-        alert('Failed to delete post');
+        alert(response.statusText);
     }
 };
 
@@ -40,7 +40,7 @@ const addCommentHandler = async (event) => {
         if (response.ok) {
             document.location.replace(`/dashboard/${id}`);
         } else {
-            alert('Failed to add comment');
+            alert(response.statusText);
         }
     }
 };
@@ -59,7 +59,7 @@ const updateCommentHandler = async (event) => {
         if (response.ok) {
             document.location.replace(`/dashboard/${id}`);
         } else {
-            alert('Failed to update comment');
+            alert(response.statusText);
         }
     }
 };
@@ -72,12 +72,12 @@ const deleteCommentHandler = async (event) => {
     if (response.ok) {
         document.location.replace(`/dashboard/${id}`);
     } else {
-        alert('Failed to delete comment');
+        alert(response.statusText);
     }
 };
 
-document.querySelector('#update-post').addEventListener('click', updatePostHandler);
-document.querySelector('#delete-post').addEventListener('click', deletePostHandler);
-document.querySelector('#add-comment').addEventListener('click', addCommentHandler);
-document.querySelector('#delete-comment').addEventListener('click', deleteCommentHandler);
-document.querySelector('#update-comment').addEventListener('click', updateCommentHandler);
+document.querySelector('#update-post').addEventListener('submit', updatePostHandler);
+document.querySelector('#delete-post').addEventListener('submit', deletePostHandler);
+document.querySelector('#add-comment').addEventListener('submit', addCommentHandler);
+document.querySelector('#delete-comment').addEventListener('submit', deleteCommentHandler);
+document.querySelector('#update-comment').addEventListener('submit', updateCommentHandler);
