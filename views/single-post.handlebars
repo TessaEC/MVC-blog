@@ -20,9 +20,9 @@
   <p class="small-text">{{comment.user.username}} on {{formatDate created_at}}</p>
 
 {{!-- comment editing options --}}
-  {{#if logged_in}}
+  {{#if ../logged_in}}
   <button type="submit" class="btn btn-primary" id="update-comment" data-id="{{comment.id}}">Update Comment</button>
-  <input id="comment" cols="30" rows="10"></input>
+  <input input class="form-control para" name="title" id="comment" rows="1" ></input>
   <button type="submit" class="btn btn-primary" id="add-comment" data-id="{{comment.id}}">Add Comment</button>
   <button type="submit" class="btn btn-primary" id="delete-comment" data-id="{{comment.id}}">Delete Comment</button>
   {{/if}}

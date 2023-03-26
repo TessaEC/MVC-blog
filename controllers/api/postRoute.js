@@ -40,7 +40,7 @@ router.get('/:id', (req, res) => {
             // pass data to template
             res.render('single-post', {
                 post,
-                loggedIn: req.session.logged_in
+                logged_in: req.session.logged_in
             });
         })
         .catch(err => {
