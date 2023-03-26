@@ -55,51 +55,6 @@ router.get('/dashboard', withAuth, async (req ,res) => {
       res.status(500).json(err)
   }
 })
-// get a single blog post and its comments
-router.get('/:id', (req, res) => {
-  BlogPost.findOne({
-      where: {
-          id: req.params.id
-      },
-      attributes: [
-          'id',
-          'content',
-          'title',
-          'created_at',
-      ],
-      include: [
-          {
-              model: Comment,
-              include: [{
-                  model: User,
-                  attributes: ['username']
-              }
-              ]
-          },
-          {
-              model: User,
-              attributes: ['username']
-          }
-      ]
-  })
-      .then(BlogPostData => {
-          if (!BlogPostData) {
-              res.status(404).json({ message: 'Unable to locate a blog with this ID' });
-              return;
-          }
-          // serialize the data
-          const post = BlogPostData.get({ plain: true })
 
-          // pass data to template
-          res.render('single-post', {
-              post,
-              loggedIn: req.session.logged_in
-          });
-      })
-      .catch(err => {
-          console.log(err);
-          res.status(500).json(err);
-      });
-});
 
 module.exports = router;

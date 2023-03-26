@@ -5,7 +5,7 @@
   {{#each posts as |post|}}
   <div class="divider">
     <h4>{{post.title}}</h4>
-    <span class="small-text"><a href="/{{post.id}}">View Blog</a></span>
+    <span class="small-text"><button id="view-post">View Blog</button></span>
     <div>
       <p class="para">{{post.content}}</p>
       <p class="small-text">Written by {{user.username}} on {{formatDate created_at}}</p>
@@ -13,3 +13,5 @@
   </div>
   {{/each}}
 </div>
+
+<script src="./js/homepage.js"></script>

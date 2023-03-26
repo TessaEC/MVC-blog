@@ -1,49 +1,55 @@
+{{!-- Add post --}}
 <form>
   <div>
     <h1>Dashboard</h1>
-  <div class="form-group">
-    <div class="container mt-5"></div>
-    <label for="title">Blog Title</label>
-    <textarea class="form-control" name="title" id="title" rows="1"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="content">Blog Content</label>
-    <textarea class="form-control" name="content" id="content" rows="5"></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary" id="new-post">Add Blog</button>
-  <div>
-
-    {{#each user.post.posts as |post|}}
     <div class="form-group">
+      <div class="container mt-5"></div>
       <label for="title">Blog Title</label>
-      <input class="form-control" name="title" id="title" rows="1" value="{{post.title}}"></input>
+      <textarea class="form-control" name="title" id="title" rows="1"></textarea>
     </div>
     <div class="form-group">
       <label for="content">Blog Content</label>
-      <input class="form-control para" name="content" id="content" rows="5" value="{{post.content}}"></input>
+      <textarea class="form-control" name="content" id="content" rows="5"></textarea>
     </div>
-    <p class="small-content">Written by {{post.user.username}} on {{formatDate created_at}}</p>
-  </div>
-  <div>
-  {{#each post.comments as |comment|}}
-  <div>
-    <p class="para">{{comment.content}}</p>
-    <p class="small-content">{{comment.user.username}} on {{formatDate created_at}}</p>
-  </div>
-  </div>
-  {{/each}}
-  <div class="form-group">
-    <label for="title">EDIT:</label>
-
+    <button type="submit" class="btn btn-primary" id="new-post">Add Blog</button>
     <div>
-      <button type="submit" class="btn btn-primary" id="update-comment">Update Comment</button>
-      <button type="submit" class="btn btn-primary" id="delete-comment">Delete Comment</button>
-      <button type="submit" class="btn btn-primary" id="update-post">Update Blog</button>
-      <button type="submit" class="btn btn-primary" id="delete-post">Delete Blog</button>
+
+  {{#each posts as |post|}}
+  <div class="divider">
+    <h4>{{post.title}}</h4>
+    <span class="small-text"><button id="view-post">View Blog</button></span>
+    <div>
+      <p class="para">{{post.content}}</p>
+      <p class="small-text">Written by {{user.username}} on {{formatDate created_at}}</p>
     </div>
   </div>
   {{/each}}
-</form>
+  </form>
+{{!-- Each user post --}}
+  <div>
+    <h1>My Blogs</h1>
+    <div class="form-group">
+      <div class="container mt-5"></div>
+  {{#each posts as |post|}}
+  <div class="divider">
+    <h4>{{post.title}}</h4>
+    <span class="small-text"><button id="view-post">View Blog</button></span>
+    <div>
+      <p class="para">{{post.content}}</p>
+      <p class="small-text">Created on {{formatDate created_at}}</p>
+    </div>
+    <div>
+      {{#each comments as |comment|}}
+      <p class="para">{{comment.content}}</p>
+      <p class="small-content">{{comment.user.username}} on {{formatDate created_at}}</p>
+      {{/each}}
+    </div>
+    </div>
+
+
+      {{/each}}
+    </div>
+</div>
 
 
 <script src="./js/dashboard.js"></script>
