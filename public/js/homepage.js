@@ -1,5 +1,5 @@
 const viewPostHandler = async (event) => {
-    if (event.target.hasAttribute('data-id')) {
+    if (event.target.classList.contains('view-post')) {
         const id = event.target.getAttribute('data-id');
         const response = await fetch(`/api/post/${id}`, {
             method: 'GET',
@@ -11,6 +11,5 @@ const viewPostHandler = async (event) => {
             alert(response.statusText);
         }
     }
-};
-
-document.querySelector('#view-post').addEventListener('click', viewPostHandler);
+}
+document.addEventListener('submit', viewPostHandler);
