@@ -38,7 +38,7 @@ const addCommentHandler = async (event) => {
             headers: { 'Content-Type': 'application/json' },
         });
         if (response.ok) {
-            document.location.replace(`/dashboard/${id}`);
+            document.location.replace(`api/dashboard/${id}`);
         } else {
             alert(response.statusText);
         }
