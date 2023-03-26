@@ -15,7 +15,7 @@
   <button type="submit" class="btn btn-primary" id="delete-post" data-id="{{post.id}}">Delete Blog</button>
   {{/if}}
 {{!-- comment section --}}
-  {{#each post.comment.comments as |comment|}}
+  {{#each post.comments as |comment|}}
   <input class="form-control para" name="title" id="content" rows="1" value="{{comment.content}}"></input>
   <p class="small-text">{{comment.user.username}} on {{formatDate created_at}}</p>
 
