@@ -3,7 +3,7 @@ const addCommentHandler = async (event) => {
         const id = event.target.getAttribute('data-id');
         const comment = document.querySelector('#comment').value.trim();
         if (comment) {
-            const response = await fetch(`/api/comment/${id}`, {
+            const response = await fetch(`post/comment/${id}`, {
                 method: 'POST',
                 body: JSON.stringify({ comment }),
                 headers: {
@@ -24,7 +24,7 @@ const updateCommentHandler = async (event) => {
         const id = event.target.getAttribute('data-id');
         const comment = document.querySelector('#comment').value.trim();
         if (comment) {
-            const response = await fetch(`/api/comment/${id}`, {
+            const response = await fetch(`/comment/${id}`, {
                 method: 'PUT',
                 body: JSON.stringify({ comment }),
                 headers: {

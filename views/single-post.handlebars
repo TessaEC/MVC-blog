@@ -18,7 +18,7 @@
   {{#each post.comments as |comment|}}
   <p class="comment-text para" name="title" id="content" rows="1">{{comment.content}}</p>
   <i><p class="small-text">{{comment.user.username}} on {{formatDate created_at}}</p></i>
-<a href="/api/comment/{{post.comment.id}}" class="small-text view-comment" data-id="{{post.comment.id}}">View Comment</a>
+<a href="/comment/{{comment.id}}" class="small-text view-comment" data-id="{{comment.id}}">View Comment</a>
   {{/each}}
 </form>
 

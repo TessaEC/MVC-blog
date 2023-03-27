@@ -64,38 +64,29 @@ router.get('/', (req, res) => {
         });
 });
 
-router.get('/:id', (req, res) => {
-    Comment.findOne({
-        where: {
-            id: req.params.id
-        },
-        attributes: [
-            'id',
-            'content',
-            'created_at',
-        ],
-        include: [
-            {
-                model: Comment,
-                include: [{
+// get single comment
+router.get('/comment', withAuth, async (req, res) => {
+    try {
+        const commentData = await Comment.findByPk(req.params.id, {
+            attributes: ['id', 'content', 'created_at'],
+            include: [
+                {
                     model: User,
                     attributes: ['username']
-                }]
-            }
-        ]
-    })
-        .then(dbCommentData => {
-            if (!dbCommentData) {
-                res.status(404).json({ message: 'No comment found with this id' });
-                return;
-            }
-            res.json(dbCommentData);
+                }
+            ]
         })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
-});
+        const comment = commentData.get({ plain: true })
+        res.render('comment', {
+            ...comment,
+            logged_in: true
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+  })
 
 
 module.exports = router;

@@ -37,7 +37,7 @@ const deletePostHandler = async (event) => {
 const viewCommentHandler = async (event) => {
     if (event.target.classList.contains('view-comment')) {
         const id = event.target.getAttribute('data-id');
-        const response = await fetch(`/api/comment/${id}`, {
+        const response = await fetch(`/comment/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
