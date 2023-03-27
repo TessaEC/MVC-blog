@@ -14,17 +14,6 @@
     <button type="submit" class="btn btn-primary" id="new-post">Add Blog</button>
     <div>
 
-  {{#each posts as |post|}}
-  <div class="divider">
-    <h4>{{post.title}}</h4>
-      <a href="/api/post/{{post.id}}" class="small-text" id="view-post" data-id="{{post.id}}">Edit Blog</a>
-    <div>
-      <p class="para">{{post.content}}</p>
-      <p class="small-text">Written by {{user.username}} on {{formatDate created_at}}</p>
-    </div>
-  </div>
-  {{/each}}
-  </form>
 {{!-- Each user post --}}
   <div>
     <h1>My Blogs</h1>
@@ -33,7 +22,7 @@
   {{#each posts as |post|}}
   <div class="divider">
     <h4>{{post.title}}</h4>
-    <span class="small-text"><button id="view-post">View Blog</button></span>
+      <a href="/api/post/{{post.id}}" class="small-text" id="view-post" data-id="{{post.id}}">Edit Blog</a>
     <div>
       <p class="para">{{post.content}}</p>
       <p class="small-text">Created on {{formatDate created_at}}</p>

@@ -18,7 +18,8 @@ const updatePostHandler = async (event) => {
             }
         }
     }
-}
+};
+
 const deletePostHandler = async (event) => {
     if (event.target.hasAttribute('data-id')) {
         const id = event.target.getAttribute('data-id');
@@ -31,62 +32,22 @@ const deletePostHandler = async (event) => {
             alert(response.statusText);
         }
     }
-}
-const addCommentHandler = async (event) => {
-    if (event.target.hasAttribute('data-id')) {
+};
+
+const viewCommentHandler = async (event) => {
+    if (event.target.classList.contains('view-comment')) {
         const id = event.target.getAttribute('data-id');
-        const comment = document.querySelector('#comment').value.trim();
-        if (comment) {
-            const response = await fetch(`/post/${id}`, {
-                method: 'POST',
-                body: JSON.stringify({ comment }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (response.ok) {
-                document.location.reload();
-            } else {
-                alert(response.statusText);
-            }
-        }
-    }
-}
-const updateCommentHandler = async (event) => {
-    if (event.target.hasAttribute('data-id')) {
-        const id = event.target.getAttribute('data-id');
-        const comment = document.querySelector('#comment').value.trim();
-        if (comment) {
-            const response = await fetch(`/comment/${id}`, {
-                method: 'PUT',
-                body: JSON.stringify({ comment }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (response.ok) {
-                document.location.reload();
-            } else {
-                alert(response.statusText);
-            }
-        }
-    }
-}
-const deleteCommentHandler = async (event) => {
-    if (event.target.hasAttribute('data-id')) {
-        const id = event.target.getAttribute('data-id');
-        const response = await fetch(`/comment/${id}`, {
-            method: 'DELETE',
+        const response = await fetch(`/api/comment/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
-        if (response.ok) {
-            document.location.reload();
-        } else {
+        if (!response.ok) {
             alert(response.statusText);
         }
     }
 }
+document.addEventListener('submit', viewCommentHandler);
 document.querySelector('#update-post').addEventListener('click', updatePostHandler);
 document.querySelector('#delete-post').addEventListener('click', deletePostHandler);
-document.querySelector('#add-comment').addEventListener('click', addCommentHandler);
-document.querySelector('#update-comment').addEventListener('click', updateCommentHandler);
-document.querySelector('#delete-comment').addEventListener('click', deleteCommentHandler);

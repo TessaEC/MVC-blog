@@ -1,31 +1,24 @@
 {{!-- single-post --}}
 <form>
   <div class="form-group">
-    <label for="title">Blog Title</label>
-    <input class="form-control" name="title" id="title" rows="1" value="{{post.title}}"></input>
+      <b><input class="form-control" name="title" id="title" rows="1" value="{{post.title}}"></input></b>
+
+
+    <input class="form-control" name="content" id="content" rows="5" value="{{post.content}}"></input>
   </div>
-  <div class="form-group">
-    <label for="content">Blog Content</label>
-    <input class="form-control para" name="content" id="content" rows="5" value="{{post.content}}"></input>
-  </div>
-  <p class="small-content">Written by {{post.user.username}} on {{formatDate created_at}}</p>
+  <i><p class="small-text">Written by {{post.user.username}} on {{formatDate created_at}}</p></i>
 {{!-- Blog editing options --}}
   {{#if (eq post.user.id user.id)}}
   <button type="submit" class="btn btn-primary" id="update-post" data-id="{{post.id}}">Update Blog</button>
   <button type="submit" class="btn btn-primary" id="delete-post" data-id="{{post.id}}">Delete Blog</button>
   {{/if}}
+
+
 {{!-- comment section --}}
   {{#each post.comments as |comment|}}
-  <input class="form-control para" name="title" id="content" rows="1" value="{{comment.content}}"></input>
-  <p class="small-text">{{comment.user.username}} on {{formatDate created_at}}</p>
-
-{{!-- comment editing options --}}
-  {{#if ../logged_in}}
-  <button type="submit" class="btn btn-primary" id="update-comment" data-id="{{comment.id}}">Update Comment</button>
-  <input input class="form-control para" name="title" id="comment" rows="1" ></input>
-  <button type="submit" class="btn btn-primary" id="add-comment" data-id="{{comment.id}}">Add Comment</button>
-  <button type="submit" class="btn btn-primary" id="delete-comment" data-id="{{comment.id}}">Delete Comment</button>
-  {{/if}}
+  <p class="comment-text para" name="title" id="content" rows="1">{{comment.content}}</p>
+  <i><p class="small-text">{{comment.user.username}} on {{formatDate created_at}}</p></i>
+<a href="/api/comment/{{post.comment.id}}" class="small-text view-comment" data-id="{{post.comment.id}}">View Comment</a>
   {{/each}}
 </form>
 

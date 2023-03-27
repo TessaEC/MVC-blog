@@ -1,4 +1,8 @@
-//logout
+function redirect(url) {
+    window.location.href = url;
+  }
+
+  //logout
 const logoutHandler = async () => {
 
  const response = await fetch('/api/user/logout', {
@@ -7,12 +11,10 @@ const logoutHandler = async () => {
     });
     
     if (response.ok) {
-        document.location.replace('/');
+        redirect('/');
     } else {
         alert(response.statusText);
     }
 };
 
-document
-    .querySelector('#logout')
-    .addEventListener('click', logoutHandler);
+document.querySelector('#logout').addEventListener('click', logoutHandler);

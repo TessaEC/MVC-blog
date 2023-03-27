@@ -54,10 +54,43 @@ router.delete('/:id', withAuth, async (req, res) => {
         res.status(400).json(err)
     }
 });
-
+// get all comments
 router.get('/', (req, res) => {
     Comment.findAll()
         .then(dbCommentData => res.json(dbCommentData))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
+router.get('/:id', (req, res) => {
+    Comment.findOne({
+        where: {
+            id: req.params.id
+        },
+        attributes: [
+            'id',
+            'content',
+            'created_at',
+        ],
+        include: [
+            {
+                model: Comment,
+                include: [{
+                    model: User,
+                    attributes: ['username']
+                }]
+            }
+        ]
+    })
+        .then(dbCommentData => {
+            if (!dbCommentData) {
+                res.status(404).json({ message: 'No comment found with this id' });
+                return;
+            }
+            res.json(dbCommentData);
+        })
         .catch(err => {
             console.log(err);
             res.status(500).json(err);

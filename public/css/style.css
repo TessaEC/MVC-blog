@@ -48,5 +48,10 @@
   .container {
     margin-bottom: 3rem;
   }
+
+  .comment-text {
+    color: rgb(18, 18, 19);
+    font-size: 1.2rem;
+  }
   /* bootstrap */
   body{font-size: 1.5rem; background: #2C4766;color: white}input{width: auto} .card{border: none;height: 320px} .input-adj{width: 100%} .forms-inputs{position: relative;color: black}.forms-inputs span{position: absolute;top:-18px;left: 10px;background-color: #fff;padding: 5px 10px;font-size: 15px}.forms-inputs input{height: 50px;border: 2px solid #eee}.forms-inputs input:focus{box-shadow: none;outline: none;border: 2px solid #000}.btn{height: 50px}.success-data{display: flex;flex-direction: column}.bxs-badge-check{font-size: 90px}
