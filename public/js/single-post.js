@@ -1,10 +1,10 @@
 const updatePostHandler = async (event) => {
     if (event.target.hasAttribute('data-id')) {
         const id = event.target.getAttribute('data-id');
-        const title = document.querySelector('#title').value.trim();
-        const content = document.querySelector('#content').value.trim();
+        const title = document.querySelector('#update-title').value.trim();
+        const content = document.querySelector('#update-content').value.trim();
         if (title && content) {
-            const response = await fetch(`/post/${id}`, {
+            const response = await fetch(`/api/post/${id}`, {
                 method: 'PUT',
                 body: JSON.stringify({ title, content }),
                 headers: {
@@ -23,7 +23,7 @@ const updatePostHandler = async (event) => {
 const deletePostHandler = async (event) => {
     if (event.target.hasAttribute('data-id')) {
         const id = event.target.getAttribute('data-id');
-        const response = await fetch(`/post/${id}`, {
+        const response = await fetch(`/api/post/${id}`, {
             method: 'DELETE',
         });
         if (response.ok) {
@@ -34,20 +34,29 @@ const deletePostHandler = async (event) => {
     }
 };
 
-const viewCommentHandler = async (event) => {
-    if (event.target.classList.contains('view-comment')) {
+const addCommentHandler = async (event) => {
+    if (event.target.hasAttribute('data-id')) {
         const id = event.target.getAttribute('data-id');
-        const response = await fetch(`/comment/${id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (!response.ok) {
-            alert(response.statusText);
+        const comment = document.querySelector('#new-comment').value.trim();
+        if (comment) {
+            const response = await fetch(`/api/post/${id}`, {
+                method: 'POST',
+                body: JSON.stringify({ comment }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                document.location.reload();
+            } else {
+                alert(response.statusText);
+            }
         }
     }
-}
-document.addEventListener('submit', viewCommentHandler);
+};
+
+
+
 document.querySelector('#update-post').addEventListener('click', updatePostHandler);
 document.querySelector('#delete-post').addEventListener('click', deletePostHandler);
+document.querySelector('#add-comment').addEventListener('submit', addCommentHandler);

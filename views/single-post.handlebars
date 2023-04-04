@@ -1,25 +1,39 @@
 {{!-- single-post --}}
 <form>
   <div class="form-group">
-      <b><input class="form-control" name="title" id="title" rows="1" value="{{post.title}}"></input></b>
+    <b><input class="form-control" id="update-title" rows="1" value="{{post.title}}"></input></b>
 
 
-    <input class="form-control" name="content" id="content" rows="5" value="{{post.content}}"></input>
+    <input class="form-control" id="update-content" rows="5" value="{{post.content}}"></input>
   </div>
-  <i><p class="small-text">Written by {{post.user.username}} on {{formatDate created_at}}</p></i>
-{{!-- Blog editing options --}}
-  {{#if (eq post.user.id user.id)}}
+  <i>
+    <p class="small-text">Written by {{post.user.username}} on {{formatDate created_at}}</p>
+  </i>
+  {{!-- Blog editing options --}}
+  {{#if logged_in}}
   <button type="submit" class="btn btn-primary" id="update-post" data-id="{{post.id}}">Update Blog</button>
   <button type="submit" class="btn btn-primary" id="delete-post" data-id="{{post.id}}">Delete Blog</button>
   {{/if}}
 
 
-{{!-- comment section --}}
+  {{!-- comment section --}}
   {{#each post.comments as |comment|}}
-  <p class="comment-text para" name="title" id="content" rows="1">{{comment.content}}</p>
-  <i><p class="small-text">{{comment.user.username}} on {{formatDate created_at}}</p></i>
-<a href="/comment/{{comment.id}}" class="small-text view-comment" data-id="{{comment.id}}">View Comment</a>
+  <p class="comment-text para" id="content" rows="1">{{comment.content}}</p>
+  <i>
+    <p class="small-text">{{comment.user.username}} on {{formatDate created_at}}</p>
+  </i>
   {{/each}}
+
+  {{#if logged_in}}
+  <input input class="form-control para" id="new-comment" rows="10" placeholder="Comment here..."></input>
+  <div>
+  <button type="submit" class="btn btn-primary para" id="add-comment" data-id="{{post.id}}">Add Comment</button>
+  </div>
+  {{else}}
+  <div>
+  <p>Please log in to leave a comment!</p>
+  </div>
+  {{/if}}
 </form>
 
 

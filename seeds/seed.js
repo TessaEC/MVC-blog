@@ -52,7 +52,7 @@ sequelize.sync({ force: true })
     const comments = [];
     posts.forEach((post) => {
       const user = users[Math.floor(Math.random() * users.length)];
-      const content = `This is such a great post, ${user.username}!`;
+      const content = `This is such a great post!`;
       comments.push({
         content: content,
         user_id: user.id,

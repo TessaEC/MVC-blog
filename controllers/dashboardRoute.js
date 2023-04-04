@@ -23,7 +23,10 @@ router.get('/', withAuth, (req, res) => {
   })
     .then(dbBlogPostData => {
       const posts = dbBlogPostData.map(post => post.get({ plain: true }));
-      res.render('dashboard', { posts, logged_in: true });
+      res.render('dashboard', {
+        posts,
+        logged_in: true,
+        username: req.session.username});
     })
     .catch(err => {
       console.log(err);
@@ -31,124 +34,18 @@ router.get('/', withAuth, (req, res) => {
     });
 });
 
-//create blog post
+// create blog post
+
 router.post('/', withAuth, async (req, res) => {
   try {
-      const newPost = await BlogPost.create({
-          ...req.body,
-          user_id: req.session.user_id,
-      })
-      res.status(200).json(newPost)
-  }
-  catch (err) {
-      console.log(err)
-      res.status(400).json(err)
-  }
-})
-// update blog post
-router.put("/:id", withAuth, async (req, res) => {
-  try {
-      const updatePost = await BlogPost.update(
-          {
-              title: req.body.title,
-              content: req.body.content
-          },
-          {
-              where: {
-                  id: req.params.id
-              }
-          }
-      )
-      res.status(200).json(updatePost)
-  }
-  catch (err) {
-      console.log(err)
-      res.status(400).json(err)
-  }
-})
-// delete blog post
-router.delete("/:id", withAuth, async (req, res) => {
-  try {
-      const deletePost = await BlogPost.destroy({
-          where: {
-              id: req.params.id
-          }
-      })
-      res.status(200).json(deletePost)
-  }
-  catch (err) {
-      console.log(err)
-      res.status(400).json(err)
-  }
-})
-
-// create new comment
-router.post("/:id", withAuth, async (req, res) => {
-  try {
-   const newComment = await Comment.create({
+    const newBlogPost = await BlogPost.create({
       ...req.body,
-      user_id: req.session.user_id,
-      blog_post_id: req.params.id
-  })
-  res.status(200).json(newComment)
-  }
-  catch (err) {
-      console.log(err)
-      res.status(400).json(err)
+      user_id: req.session.user_id
+    });
+    res.status(200).json(newBlogPost);
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
-// update comment
-router.put('/:id', withAuth, async (req, res) => {
-  try {
-      // Query the database to get the comment with the specified ID
-      const comment = await Comment.findByPk(req.params.id);
-
-      // Verify that the comment belongs to the authenticated user
-      if (comment.user_id !== req.user.id) {
-          return res.status(401).json({ message: "You are not authorized to update this comment" });
-      }
-      const updateComment = await comment.update(
-          {
-              title: req.body.title,
-              content: req.body.content
-          },
-          {
-              where: {
-                  id: req.params.id
-
-              }
-          }
-      )
-      res.status(200).json(updateComment)
-  }
-  catch (err) {
-      console.log(err)
-      res.status(400).json(err)
-  }
-});
-// delete comment
-router.delete('/:id', withAuth, async (req, res) => {
-  try {
-      // Query the database to get the comment with the specified ID
-      const comment = await Comment.findByPk(req.params.id);
-
-      // Verify that the comment belongs to the authenticated user
-      if (comment.user_id !== req.user.id) {
-          return res.status(401).json({ message: "You are not authorized to update this comment" });
-      }
-      const deleteComment = await comment.destroy({
-          where: {
-              id: req.params.id
-          }
-      })
-      res.status(200).json(deleteComment)
-  }
-  catch (err) {
-      console.log(err)
-      res.status(400).json(err)
-  }
-});
-
-
 
 module.exports = router

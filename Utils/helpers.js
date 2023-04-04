@@ -6,8 +6,8 @@ module.exports = {
   }
 }
 
-const handlebars = require('handlebars');
+const Handlebars = require('handlebars');
 
-handlebars.registerHelper('eq', function(value1, value2) {
-  return value1 === value2;
+Handlebars.registerHelper('eq', function(value1, value2, options) {
+  return value1 === value2 ? options.fn(this) : options.inverse(this);
 });
