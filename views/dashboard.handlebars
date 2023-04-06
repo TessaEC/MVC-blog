@@ -25,12 +25,12 @@
       <a href="/api/post/{{post.id}}" class="small-text" id="view-post" data-id="{{post.id}}">Edit Blog</a>
     <div>
       <p class="para">{{post.content}}</p>
-      <p class="small-text">Created on {{formatDate created_at}}</p>
+      <p class="small-text">Created on {{created_at}}</p>
     </div>
     <div>
       {{#each comments as |comment|}}
       <p class="para">{{comment.content}}</p>
-      <p class="small-content">{{comment.user.username}} on {{formatDate created_at}}</p>
+      <p class="small-content">{{comment.user.username}} on {{created_at}}</p>
       {{/each}}
     </div>
     </div>

@@ -9,7 +9,7 @@
 <a href="/api/post/{{post.id}}" class="small-text view-post" data-id="{{post.id}}">View Blog</a>
     <div>
       <p class="para">{{post.content}}</p>
-      <p class="small-text">Written by {{user.username}} on {{formatDate created_at}}</p>
+      <p class="small-text">Written by {{user.username}} on {{created_at}}</p>
     </div>
   </div>
   {{/each}}

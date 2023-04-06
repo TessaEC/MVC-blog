@@ -20,7 +20,7 @@
   {{#each post.comments as |comment|}}
   <p class="comment-text para" id="content" rows="1">{{comment.content}}</p>
   <i>
-    <p class="small-text">{{comment.user.username}} on {{formatDate created_at}}</p>
+    <p class="small-text">{{comment.user.username}} on {{created_at}}</p>
   </i>
   {{/each}}
 
