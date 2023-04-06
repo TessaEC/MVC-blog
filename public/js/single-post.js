@@ -1,3 +1,4 @@
+//update post
 const updatePostHandler = async (event) => {
     if (event.target.hasAttribute('data-id')) {
         const id = event.target.getAttribute('data-id');
@@ -20,6 +21,7 @@ const updatePostHandler = async (event) => {
     }
 };
 
+//delete post
 const deletePostHandler = async (event) => {
     if (event.target.hasAttribute('data-id')) {
         const id = event.target.getAttribute('data-id');
@@ -34,29 +36,31 @@ const deletePostHandler = async (event) => {
     }
 };
 
+//add comment
 const addCommentHandler = async (event) => {
+    event.preventDefault();
     if (event.target.hasAttribute('data-id')) {
         const id = event.target.getAttribute('data-id');
         const comment = document.querySelector('#new-comment').value.trim();
-        if (comment) {
-            const response = await fetch(`/api/post/${id}`, {
-                method: 'POST',
-                body: JSON.stringify({ comment }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (response.ok) {
-                document.location.reload();
-            } else {
-                alert(response.statusText);
-            }
+        const response = await fetch(`/api/post/${id}`, {
+            method: 'POST',
+            body: JSON.stringify({ comment }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            console.log('comment added!')
+            document.location.reload();
+        } else {
+            console.log('comment not added!')
+            alert(response.statusText);
         }
     }
-};
+}
 
 
 
 document.querySelector('#update-post').addEventListener('click', updatePostHandler);
 document.querySelector('#delete-post').addEventListener('click', deletePostHandler);
-document.querySelector('#add-comment').addEventListener('submit', addCommentHandler);
+document.querySelector('#add-comment').addEventListener('click', addCommentHandler);

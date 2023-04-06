@@ -1,17 +1,12 @@
-function redirect(url) {
-    window.location.href = url;
-  }
-
-  //logout
+//logout
 const logoutHandler = async () => {
-
+console.log('homepage!')
  const response = await fetch('/api/user/logout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
     });
-    
     if (response.ok) {
-        redirect('/');
+        document.location.replace('/')
     } else {
         alert(response.statusText);
     }

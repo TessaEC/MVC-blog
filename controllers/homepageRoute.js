@@ -37,27 +37,6 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-
-
-// get dashboard page, use withAuth middleware to prevent access to route if not a user/logged in
-// router.get('/dashboard', withAuth, async (req ,res) => {
-//   try {
-//       const userData = await User.findByPk(req.session.user_id, {
-//           attributes: { exclude: ['password'] },
-//           include: [{ model: BlogPost }]
-//           })
-//       const user = userData.get({ plain: true })
-//       res.render('dashboard', {
-//           ...user,
-//           logged_in: true
-//       })
-//   }
-//   catch (err) {
-//       console.log(err)
-//       res.status(500).json(err)
-//   }
-// })
-
 // get a single blog post and its comments
 router.get('/post/:id', (req, res) => {
     BlogPost.findOne({

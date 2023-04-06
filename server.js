@@ -32,6 +32,11 @@ const sess = {
   })
 };
 
+// handlebar helper for if/else
+Handlebars.registerHelper('eq', function(value1, value2, options) {
+  return value1 === value2 ? options.fn(this) : options.inverse(this);
+});
+
 // middleware for session
 app.use(session(sess));
 // Inform Express.js on which template engine to use

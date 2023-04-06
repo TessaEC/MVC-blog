@@ -25,9 +25,9 @@
   {{/each}}
 
   {{#if logged_in}}
-  <input input class="form-control para" id="new-comment" rows="10" placeholder="Comment here..."></input>
+  <textarea name="comment" class="form-control para" id="new-comment" rows="2" placeholder="Comment here..."></textarea>
   <div>
-  <button type="submit" class="btn btn-primary para" id="add-comment" data-id="{{post.id}}">Add Comment</button>
+  <button class="btn btn-primary para" id="add-comment" data-id="{{post.id}}">Add Comment</button>
   </div>
   {{else}}
   <div>

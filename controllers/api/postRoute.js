@@ -3,8 +3,9 @@ const { BlogPost, User, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // Single-post and its comments
-router.get('/:id', (req, res) => {
-    BlogPost.findOne({
+router.get('/:id', async (req, res) => {
+    try {
+    const BlogPostData = await BlogPost.findOne({
         where: {
             id: req.params.id
         },
@@ -29,9 +30,8 @@ router.get('/:id', (req, res) => {
             }
         ]
     })
-        .then(BlogPostData => {
             if (!BlogPostData) {
-                res.status(404).json({ message: 'Unable to locate a blog with this ID' });
+                res.status(404).send('No post found with this id!');
                 return;
             }
             // serialize the data
@@ -42,11 +42,11 @@ router.get('/:id', (req, res) => {
                 post,
                 logged_in: req.session.logged_in
             });
-        })
-        .catch(err => {
+        }
+        catch(err) {
             console.log(err);
             res.status(500).json(err);
-        });
+        }
   });
 
 // update blog post
@@ -90,11 +90,12 @@ router.put("/:id", withAuth, async (req, res) => {
 // create new comment
 router.post("/:id", withAuth, async (req, res) => {
     try {
-     const newComment = await Comment.create({
-        ...req.body,
+        const newComment = await Comment.create({
+        content: req.body.comment,
         user_id: req.session.user_id,
         blog_post_id: req.params.id
     })
+    console.log("I'm in the comment route!")
     res.status(200).json(newComment)
     }
     catch (err) {
